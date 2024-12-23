@@ -5,10 +5,10 @@ import (
 	"context"
 	"log"
 	"github.com/jackc/pgx/v5"
-	"github.com/bhushan217/go-rnd/db"
-	"github.com/bhushan217/go-rnd/store"
+	"github.com/bhushan217/go-rnd/db/sqlc"
+	// "github.com/bhushan217/go-rnd/store"
 	"github.com/stretchr/testify/assert"
-	"github.com/jackc/pgtype"
+	// "github.com/jackc/pgtype"
 )
 
 func TestCanVote(t *testing.T) {
@@ -77,7 +77,7 @@ func TestIf(t *testing.T) {
 func TestPermission(t *testing.T) {
 	assert := assert.New(t)
 	ctx := context.Background()
-	connStr := "postgresql://modulith:modulith@localhost:5532/modulith?sslmode=disable"
+	connStr := "postgresql://root:secret@localhost:5643/simple_blog?sslmode=disable"
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -92,10 +92,10 @@ func TestPermission(t *testing.T) {
 		assert.Len(permissions, 2)
 	})
 	t.Run("Create and list permissions", func(t *testing.T){
-		permission, err := q.CreatePermission(context.Background(), pgtype.Text{String: "DELETE_USER", Status: pgtype.Present}.Value())
+		permission, err := q.CreatePermission(context.Background(), "DELETE_USER")
 		assert.Nil(err)
 		assert.NotEmpty(permission)
-		assert.Equal(permission.Title.String, "DELETE_USER")
+		assert.Equal(permission.Title, "DELETE_USER")
 		permissions, err := q.ListPermission(context.Background())
 		assert.Nil(err)
 		assert.NotEmpty(permissions)

@@ -27,10 +27,10 @@ RETURNING id, title, body, user_id, status, created_at, created_by, updated_at, 
 `
 
 type CreatePostParams struct {
-	ID     pgtype.Text `db:"id" json:"id"`
-	Body   pgtype.Text `db:"body" json:"body"`
+	ID     string      `db:"id" json:"id"`
+	Body   string      `db:"body" json:"body"`
 	UserID pgtype.Int8 `db:"user_id" json:"user_id"`
-	Status pgtype.Text `db:"status" json:"status"`
+	Status string      `db:"status" json:"status"`
 }
 
 func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, error) {
@@ -143,7 +143,7 @@ WHERE id = $3 and version = $4
 `
 
 type UpdatePostParams struct {
-	Title     pgtype.Text `db:"title" json:"title"`
+	Title     string      `db:"title" json:"title"`
 	UpdatedBy pgtype.Int8 `db:"updated_by" json:"updated_by"`
 	ID        int64       `db:"id" json:"id"`
 	Version   pgtype.Int8 `db:"version" json:"version"`

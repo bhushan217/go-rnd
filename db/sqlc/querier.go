@@ -6,14 +6,12 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
-	CreatePermission(ctx context.Context, id pgtype.Text) (Permission, error)
+	CreatePermission(ctx context.Context, id string) (Permission, error)
 	CreatePost(ctx context.Context, arg CreatePostParams) (Post, error)
-	CreateRole(ctx context.Context, id pgtype.Text) (Role, error)
+	CreateRole(ctx context.Context, id string) (Role, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
 	DeletePermission(ctx context.Context, id int64) error
 	DeletePost(ctx context.Context, arg DeletePostParams) error
@@ -22,7 +20,7 @@ type Querier interface {
 	GetPermission(ctx context.Context, id int64) (Permission, error)
 	GetPost(ctx context.Context, id int64) (Post, error)
 	GetRole(ctx context.Context, id int64) (Role, error)
-	GetUser(ctx context.Context, username pgtype.Text) (User, error)
+	GetUser(ctx context.Context, username string) (User, error)
 	ListPermission(ctx context.Context) ([]Permission, error)
 	ListPost(ctx context.Context) ([]Post, error)
 	ListRole(ctx context.Context) ([]Role, error)

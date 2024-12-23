@@ -20,7 +20,7 @@ INSERT INTO roles (
 RETURNING id, title, created_at, created_by, updated_at, updated_by, version, latest
 `
 
-func (q *Queries) CreateRole(ctx context.Context, id pgtype.Text) (Role, error) {
+func (q *Queries) CreateRole(ctx context.Context, id string) (Role, error) {
 	row := q.db.QueryRow(ctx, createRole, id)
 	var i Role
 	err := row.Scan(
@@ -113,7 +113,7 @@ WHERE id = $2 and version = $3
 `
 
 type UpdateRoleParams struct {
-	Title   pgtype.Text `db:"title" json:"title"`
+	Title   string      `db:"title" json:"title"`
 	ID      int64       `db:"id" json:"id"`
 	Version pgtype.Int8 `db:"version" json:"version"`
 }

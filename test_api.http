@@ -1,0 +1,73 @@
+@baseUrl = http://localhost:8080/sample/v1
+@invoiceBaseURL = {{baseUrl}}/invoice
+@userBaseURL = {{baseUrl}}/user
+
+//curl -d '{"name":"Invoice #11","amount":102}' -H 'Authorization: Bearer YWRtaW46YWRtaW4xMg==' -H "Content-Type: application/json" -X POST http://localhost:8080/sample/v1/invoice
+POST {{invoiceBaseURL}}
+Content-Type: application/json
+
+{
+  "name":"Invoice #{{$randomInt}}", "amount":{{$randomInt}}
+}
+
+
+###
+POST {{userBaseURL}}/register
+Content-Type: application/json
+
+{
+  "full_name":"Amit #{{$randomInt}}",
+  "Email":"email{{$randomInt}}_@email.com",
+  "hashed_password": "HashedPassword",
+  "Username":"bhushan_{{$randomInt}}"
+}
+
+###
+
+GET {{userBaseURL}}/list
+Content-Type: application/json
+
+{
+  "search_text": "%bhushan%", "page_offset": 0, "page_size": 100
+}
+
+###
+
+GET {{userBaseURL}}/find/bhushan_101
+Content-Type: application/json
+
+{
+  "search_text": "",
+  "page_offset": 0,
+  "page_size": 10
+}
+
+#####
+PUT {{invoiceBaseURL}}/1
+Content-Type: application/json
+
+{
+  "name":"Invoice #66", "amount":106
+}
+
+####
+
+GET {{invoiceBaseURL}}
+
+####
+GET {{invoiceBaseURL}}/1
+
+####
+GET {{invoiceBaseURL}}/1
+Authorization: Bearer YWRtaW46YWRtaW4xMg==
+
+####
+DELETE {{invoiceBaseURL}}/6
+
+####
+DELETE {{invoiceBaseURL}}/6
+Authorization: Bearer YWRtaW46YWRtaW4xMg==
+
+####
+GET {{invoiceBaseURL}}
+Authorization: Bearer YWRtaW46YWRtaW4xMg==

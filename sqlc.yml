@@ -2,7 +2,7 @@ version: "2"
 sql:
   - engine: "postgresql"
     database:
-      uri: postgresql://modulith:modulith@localhost:5532/modulith?sslmode=disable
+      uri: postgresql://root:secret@localhost:5643/simple_blog?sslmode=disable
     schema: "db/migrations"
     queries: "db/query"
     gen: 

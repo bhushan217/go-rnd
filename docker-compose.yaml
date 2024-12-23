@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  postgres:
+  postgres_5643:
     image: postgres:16-alpine
     environment:
       - POSTGRES_USER=root
@@ -10,30 +10,32 @@ services:
       - "5643:5432"
     volumes:
       - data-volume:/var/lib/postgresql/data
-  redis:
+  redis_6396:
     image: bitnami/valkey:8.0.1
     ports:
       - "6396:6379"
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-      - "9090:9090"
     environment:
-      - DB_SOURCE=postgresql://root:secret@postgres:5643/simple_blog?sslmode=disable
-      - REDIS_ADDRESS=redis:6396
-    depends_on:
-      - postgres
-      - redis
-    entrypoint:
-      [
-        "/app/wait-for.sh",
-        "postgres:5643",
-        "--",
-        "/app/start.sh"
-      ]
-    command: [ "/app/main" ]
+      - VALKEY_PASSWORD=Valkey!5643*
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #     - "9090:9090"
+  #   environment:
+  #     - DB_SOURCE=postgresql://root:secret@postgres_5643:5432/simple_blog?sslmode=disable
+  #     - REDIS_ADDRESS=redis_6396:6396
+  #   depends_on:
+  #     - postgres_5643
+  #     - redis_6396
+  #   entrypoint:
+  #     [
+  #       "/app/wait-for.sh",
+  #       "postgres_5643:5643",
+  #       "--",
+  #       "/app/start.sh"
+  #     ]
+  #   command: [ "/app/main" ]
 volumes:
   data-volume:

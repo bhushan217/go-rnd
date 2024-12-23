@@ -13,8 +13,8 @@ type Comment struct {
 	PostID pgtype.Int8 `db:"post_id" json:"post_id"`
 	UserID pgtype.Int8 `db:"user_id" json:"user_id"`
 	// Content of the comment
-	Body      pgtype.Text        `db:"body" json:"body"`
-	Status    pgtype.Text        `db:"status" json:"status"`
+	Body      string             `db:"body" json:"body"`
+	Status    string             `db:"status" json:"status"`
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	CreatedBy pgtype.Int8        `db:"created_by" json:"created_by"`
 	UpdatedAt pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
@@ -25,7 +25,7 @@ type Comment struct {
 
 type Permission struct {
 	ID        int64              `db:"id" json:"id"`
-	Title     pgtype.Text        `db:"title" json:"title"`
+	Title     string             `db:"title" json:"title"`
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	CreatedBy pgtype.Int8        `db:"created_by" json:"created_by"`
 	UpdatedAt pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
@@ -35,12 +35,12 @@ type Permission struct {
 }
 
 type Post struct {
-	ID    int64       `db:"id" json:"id"`
-	Title pgtype.Text `db:"title" json:"title"`
+	ID    int64  `db:"id" json:"id"`
+	Title string `db:"title" json:"title"`
 	// Content of the post
-	Body      pgtype.Text        `db:"body" json:"body"`
+	Body      string             `db:"body" json:"body"`
 	UserID    pgtype.Int8        `db:"user_id" json:"user_id"`
-	Status    pgtype.Text        `db:"status" json:"status"`
+	Status    string             `db:"status" json:"status"`
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	CreatedBy pgtype.Int8        `db:"created_by" json:"created_by"`
 	UpdatedAt pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
@@ -51,7 +51,7 @@ type Post struct {
 
 type Role struct {
 	ID        int64              `db:"id" json:"id"`
-	Title     pgtype.Text        `db:"title" json:"title"`
+	Title     string             `db:"title" json:"title"`
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	CreatedBy pgtype.Int8        `db:"created_by" json:"created_by"`
 	UpdatedAt pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
@@ -86,10 +86,10 @@ type RoleM2mUser struct {
 
 type User struct {
 	ID                int64              `db:"id" json:"id"`
-	Username          pgtype.Text        `db:"username" json:"username"`
-	FullName          pgtype.Text        `db:"full_name" json:"full_name"`
-	Email             pgtype.Text        `db:"email" json:"email"`
-	HashedPassword    pgtype.Text        `db:"hashed_password" json:"hashed_password"`
+	Username          string             `db:"username" json:"username"`
+	FullName          string             `db:"full_name" json:"full_name"`
+	Email             string             `db:"email" json:"email"`
+	HashedPassword    string             `db:"hashed_password" json:"hashed_password"`
 	PasswordChangedAt pgtype.Timestamptz `db:"password_changed_at" json:"password_changed_at"`
 	IsEmailVerified   bool               `db:"is_email_verified" json:"is_email_verified"`
 	CreatedAt         pgtype.Timestamptz `db:"created_at" json:"created_at"`

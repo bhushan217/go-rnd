@@ -12,10 +12,10 @@
 
 CREATE TABLE "users" (
   "id" BIGSERIAL PRIMARY KEY,
-  "username" varchar(50),
-  "full_name" varchar(50),
-  "email" varchar(50),
-  "hashed_password" varchar(128),
+  "username" varchar(50) NOT NULL,
+  "full_name" varchar(50) NOT NULL,
+  "email" varchar(50) NOT NULL,
+  "hashed_password" varchar(128) NOT NULL,
   "password_changed_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "is_email_verified" boolean NOT NULL default false,
   "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -28,7 +28,7 @@ CREATE TABLE "users" (
 
 CREATE TABLE "roles" (
   "id" BIGSERIAL PRIMARY KEY,
-  "title" varchar(50) ,
+  "title" varchar(50) NOT NULL,
   "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "created_by" BIGINT REFERENCES users(id),
   "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE "role_m2m_user" (
 
 CREATE TABLE "permissions" (
   "id" BIGSERIAL PRIMARY KEY,
-  "title" varchar(50),
+  "title" varchar(50) NOT NULL,
   "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "created_by" BIGINT REFERENCES users(id),
   "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -78,10 +78,10 @@ CREATE TABLE "role_m2m_permission" (
 
 CREATE TABLE "posts" (
   "id" BIGSERIAL PRIMARY KEY,
-  "title" varchar,
-  "body" text,
+  "title" varchar(255) NOT NULL,
+  "body" text NOT NULL,
   "user_id" BIGINT REFERENCES users(id),
-  "status" varchar,
+  "status" varchar(1) NOT NULL default 'D',
   "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "created_by" BIGINT REFERENCES users(id),
   "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -95,8 +95,8 @@ CREATE TABLE "comments" (
   "id" BIGSERIAL PRIMARY KEY,
   "post_id" BIGINT REFERENCES posts(id),
   "user_id" BIGINT REFERENCES users(id),
-  "body" text,
-  "status" varchar,
+  "body" text NOT NULL,
+  "status" varchar(1) NOT NULL default 'D',
   "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   "created_by" BIGINT REFERENCES users(id),
   "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

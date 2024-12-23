@@ -2,3 +2,6 @@
 .vscode
 .git
 *.session.sql
+bin/go-rnd
+__debug*
+*.code-workspace

@@ -23,10 +23,10 @@ INSERT INTO users (
 `
 
 type CreateUserParams struct {
-	Username       pgtype.Text `db:"username" json:"username"`
-	HashedPassword pgtype.Text `db:"hashed_password" json:"hashed_password"`
-	FullName       pgtype.Text `db:"full_name" json:"full_name"`
-	Email          pgtype.Text `db:"email" json:"email"`
+	Username       string `db:"username" json:"username"`
+	HashedPassword string `db:"hashed_password" json:"hashed_password"`
+	FullName       string `db:"full_name" json:"full_name"`
+	Email          string `db:"email" json:"email"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -75,7 +75,7 @@ SELECT id, username, full_name, email, hashed_password, password_changed_at, is_
 WHERE username = $1 LIMIT 1
 `
 
-func (q *Queries) GetUser(ctx context.Context, username pgtype.Text) (User, error) {
+func (q *Queries) GetUser(ctx context.Context, username string) (User, error) {
 	row := q.db.QueryRow(ctx, getUser, username)
 	var i User
 	err := row.Scan(
@@ -163,7 +163,7 @@ type UpdateUserParams struct {
 	FullName          pgtype.Text        `db:"full_name" json:"full_name"`
 	Email             pgtype.Text        `db:"email" json:"email"`
 	IsEmailVerified   pgtype.Bool        `db:"is_email_verified" json:"is_email_verified"`
-	Username          pgtype.Text        `db:"username" json:"username"`
+	Username          string             `db:"username" json:"username"`
 	Version           pgtype.Int8        `db:"version" json:"version"`
 }
 

@@ -7,8 +7,6 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createPermission = `-- name: CreatePermission :one
@@ -20,7 +18,7 @@ INSERT INTO permissions (
 RETURNING id, title, created_at, created_by, updated_at, updated_by, version, latest
 `
 
-func (q *Queries) CreatePermission(ctx context.Context, id pgtype.Text) (Permission, error) {
+func (q *Queries) CreatePermission(ctx context.Context, id string) (Permission, error) {
 	row := q.db.QueryRow(ctx, createPermission, id)
 	var i Permission
 	err := row.Scan(
@@ -108,8 +106,8 @@ WHERE id = $2
 `
 
 type UpdatePermissionParams struct {
-	Title pgtype.Text `db:"title" json:"title"`
-	ID    int64       `db:"id" json:"id"`
+	Title string `db:"title" json:"title"`
+	ID    int64  `db:"id" json:"id"`
 }
 
 func (q *Queries) UpdatePermission(ctx context.Context, arg UpdatePermissionParams) error {
